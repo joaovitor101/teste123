@@ -1,10 +1,9 @@
-# dominos.py
 import sys
 
 def count_winnable_subsets(N, pieces):
     M = 1 << N
-    par = [0] * M     # paridade dos graus (6 bits)
-    verts = [0] * M   # vértices presentes (6 bits)
+    par = [0] * M
+    verts = [0] * M
     A = [p[0] for p in pieces]
     B = [p[1] for p in pieces]
 
@@ -17,11 +16,10 @@ def count_winnable_subsets(N, pieces):
         verts[mask] = verts[prev] | (1 << a) | (1 << b)
 
     ans = 0
-    for mask in range(1, M):  # não conta o subconjunto vazio
+    for mask in range(1, M):
         if par[mask].bit_count() > 2:
             continue
         vmask = verts[mask]
-        # se nenhum vértice (improvável porque mask>=1), pular
         if vmask == 0:
             continue
         start = (vmask & -vmask).bit_length() - 1
@@ -47,7 +45,6 @@ def count_winnable_subsets(N, pieces):
     return ans
 
 def main():
-    # lê T (primeira linha)
     try:
         T = int(input().strip())
     except Exception:
@@ -55,7 +52,6 @@ def main():
 
     outputs = []
     for _ in range(T):
-        # pular linhas vazias, se houver
         line = input().strip()
         while line == "":
             line = input().strip()
@@ -63,7 +59,7 @@ def main():
         pieces = []
         for _ in range(N):
             a, b = map(int, input().split())
-            pieces.append((a-1, b-1))  # usar 0..5
+            pieces.append((a-1, b-1))
         outputs.append(str(count_winnable_subsets(N, pieces)))
 
     print("\n".join(outputs))

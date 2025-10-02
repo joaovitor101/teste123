@@ -3,7 +3,7 @@ def main():
     frutas = [list(map(int, input().split())) for _ in range(N)]
     
     total = 0
-    for j in range(M):  # cada turma é uma coluna
+    for j in range(M):
         max_col = max(frutas[i][j] for i in range(N))
         total += max_col
     
